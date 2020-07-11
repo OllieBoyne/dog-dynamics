@@ -1,0 +1,3 @@
+[submodule "smal_fitter"]
+	path = smal_fitter
+	url = https://github.com/OllieBoyne/smal-fitter.git
