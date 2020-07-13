@@ -199,7 +199,7 @@ def two_vids_side_by_side(title="output", fps=24, dir=r"."):
 
 if __name__ == "__main__":
 	two_vids_side_by_side(dir=r"C:\Users\Ollie\Videos\iib_project\mo_cap_vis\Ally walk 3 HD first render")
-# animateC3D("Ally walk 3 identified.c3d")
-# animateC3D("Ally walk0061 identified.c3d")
-# for file in os.listdir("c3d_data"):
-#     animateC3D(file)
+	# animateC3D("Ally walk 3 identified.c3d")
+	# animateC3D("Ally walk0061 identified.c3d")
+	# for file in os.listdir("c3d_data"):
+	#     animateC3D(file)

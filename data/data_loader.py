@@ -17,10 +17,10 @@ from mpl_toolkits.mplot3d import Axes3D, art3d
 from matplotlib.widgets import Slider
 import plyfile
 import os, sys, csv, torch
+from smal_fitter.smbld_model.smbld_mesh import SMBLDMesh
 
 path_join = os.path.join  # simplify function name
 
-from smal_fitter.smbld_model.smbld_mesh import SMBLDMesh
 
 
 class DataSources:
@@ -62,13 +62,6 @@ def cluster_recognition(data, merge=20, cap=False):
 				bboxs.remove(bbox)
 				bboxs.remove(other)
 				bboxs.append(((min(x0, ox0), min(y0, oy0)), (max(x1, oy1), max(y1, oy1))))
-
-	# if cap:
-	#     fig, (ax1, ax2) = plt.subplots(ncols=2)
-	#     ax1.imshow(data)
-	#     ax2.imshow(labelled)
-	#     print(bboxs)
-	#     plt.show()
 
 	return bboxs
 
@@ -239,7 +232,7 @@ class ForcePlateData():
 		# Front/back based on whether ahead/behind of the overall average y
 		# Left/right based on whether ahead/behind of the local average x (either front x or back x).
 		# This will need to be converted into some kind of running average to work out which foot
-		# This process may need refining for longer clips where the dog moves relative to the treadmill more - TODO review
+		# This process may need refining for longer clips where the dog moves relative to the treadmill more
 
 		# First, identify center point as the mean (x, y) coordinate of all non zero data
 		def centre_of_pressure(data):
@@ -615,7 +608,8 @@ class JointData():
 
 
 class C3DData(JointData):
-	"""Interprets C3D format. See https://medium.com/@yvanscher/explanation-of-the-c3d-file-format-c8e065300510 for explanation of format"""
+	"""Interprets C3D format. See https://medium.com/@yvanscher/explanation-of-the-c3d-file-format-c8e065300510 for
+	explanation of format """
 
 	def __init__(self, src=None, ax=None, alt_views=None, interpolate=True, norm=True, crop=None,
 				 fix_rotations=False):
@@ -662,7 +656,8 @@ class C3DData(JointData):
 				data.append(frame_data)
 
 			def interpolate_zero_vals(data):
-				"""Gievn a time series of (x,y,z) points, identifies any ranges of (0,0,0) values, and replaces these with interpolated values either side of the zero range"""
+				"""Gievn a time series of (x,y,z) points, identifies any ranges of (0,0,0) values, and replaces these
+				with interpolated values either side of the zero range """
 				is_zero = lambda arr: np.linalg.norm(arr) == 0
 				for n, pos in enumerate(data):
 					if n == 0: continue
@@ -693,7 +688,8 @@ class C3DData(JointData):
 
 				return data
 
-			# Split up into individual marker time series, interpolate each individually, and then combine together for processing
+			# Split up into individual marker time series, interpolate each individually, and then combine together
+			# for processing
 			if interpolate: data = list(zip(*[interpolate_zero_vals(list(marker_data)) for marker_data in zip(*data)]))
 
 			# REMOVE ROTATIONAL MODES OF PAWS. IDENTIFY SIGNIFICANT TROUGHS, SET TO (0, 0, 0)
@@ -980,16 +976,18 @@ class Marker():
 			axis.set_xdata(getattr(self, var1))
 			axis.set_ydata(getattr(self, var2))
 
-# mocap = C3DData(r"E:\IIB Project Data\Dog 3D models\SMAL 3D prior data\test.c3d", #Amstaff01_SV_RM_MX.c3d")
-#                 interpolate=False)
-# mocap.plot_data()
 
-# for d in ["border_collie", "gus", "lab"]:
-#     f = ForcePlateData(f"set_3\\{d}")
-#     f.plot_pressure(title=d, n_frames = 500)
+if __name__ == "__main__":
+	# mocap = C3DData(r"E:\IIB Project Data\Dog 3D models\SMAL 3D prior data\test.c3d", #Amstaff01_SV_RM_MX.c3d")
+	#                 interpolate=False)
+	# mocap.plot_data()
 
-# f = ForcePlateData(r"set_3\gus")
-# f.plot_pressure(title="gus", n_frames = 500)
+	for d in ["border_collie", "gus", "lab"]:
+		f = ForcePlateData(f"set_3\\{d}")
+		f.plot_pressure(title=d, n_frames=500)
 
-# f = ForcePlateData(r"set_2\6kph run1")
-# f.plot_pressure(title="set2-6r1", n_frames = 500)
+	# f = ForcePlateData(r"set_3\gus")
+	# f.plot_pressure(title="gus", n_frames = 500)
+
+	# f = ForcePlateData(r"set_2\6kph run1")
+	# f.plot_pressure(title="set2-6r1", n_frames = 500)

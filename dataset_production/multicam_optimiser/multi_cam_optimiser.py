@@ -3,14 +3,13 @@
 import torch
 import numpy as np
 import sys
-sys.path.append(r"E:\IIB Project Data\smalst")
-from smal_deformer_mod import SMALX, opts
 nn = torch.nn
+from smal_fitter.smbld_model.smbld_mesh import SMBLDMesh
 
 device = "cpu"
 
-kp_to_joint = [14, 13, 12, 24, 23, 22, 10, 9, 8, 20, 19, 18, 25, 31, 34, 33]  # index = keypoint, value = joint number up to joint=15
-
+# index = keypoint, value = joint number up to joint=15
+kp_to_joint = [14, 13, 12, 24, 23, 22, 10, 9, 8, 20, 19, 18, 25, 31, 34, 33]
 
 class MultiCam(nn.Module):
 
@@ -37,14 +36,13 @@ class MultiCam(nn.Module):
 
         self.data = torch.FloatTensor(data, device=device)
         # Produce mask of all keypoints with no data - keypoints which have x=0 or y=0.
-        # TODO: improve so it looks at (x,y) pairs for zero data
         self.mask = self.data.clone().detach() != 0.0
 
         # Predicted global coordinates
         # self.pred_global = nn.Parameter(torch.full((n_frames, n_kp, 3), 0.0, device = device, requires_grad=True))
 
         # Predicted global coordinates based on SMAL Model.
-        self.smal_model = SMALX(opts, n_batch=n_frames)
+        self.smal_model = SMBLDMesh(n_batch=n_frames)
 
         # EXTRINSICS
         self.rots = nn.Parameter(torch.full((n_cams, 3), 0.0, device=device, requires_grad=True)) # Rot in global X, Y, Z for each cam

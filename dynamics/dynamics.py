@@ -5,7 +5,6 @@ from scipy import optimize, signal
 from data.data_loader import C3DData, load_force_plate_data, ForcePlateData, SMALData, get_delay_between, DataSources, \
 	path_join
 from vis.utils import *
-from dynamics.kinematic_processing import low_pass_filter, view_fft
 from vis import visualisations
 from dynamics.footfall_detector import FootfallDetector
 from tqdm import tqdm

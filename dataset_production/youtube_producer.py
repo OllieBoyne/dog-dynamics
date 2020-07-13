@@ -75,11 +75,11 @@ def download_youtube_clips(url, timestamps, download_only=False, fast_mode=True)
 
 def download_youtube_clips_from_csv(csv_loc, download_only=False, fast_mode=False):
 	"""Given a csv file, for which the format is
-	 URL 1
-	 TIMESTAP 1 START, TIMESTAMP 1 END,
-	  ...
-	  URL 2
-	  ...
+	URL 1
+	TIMESTAP 1 START, TIMESTAMP 1 END,
+	...
+	URL 2
+	...
 	extracts the clips from each url into separate directories"""
 
 	with open(csv_loc, "r") as infile:

@@ -62,7 +62,7 @@ vis_keypoints_blacklist = ["Withers", "Throat", "L_eye", "R_eye"]
 
 def count_vis_keypoints(keypoints):
 	"""Given a dict of name : [x, y, z], count the number of valid (not in blacklist),
-    visible keypoints"""
+	visible keypoints"""
 
 	res = 0
 	for n, (x, y, v) in keypoints.items():
@@ -77,7 +77,7 @@ minimum_keypoints = 8
 
 def extract_keypoints(plot=False, animal="dog", reject_multiple=True):
 	"""Extract keypoints, save to keypoints.json.
-    Apply filter based on minimum keypoints"""
+	Apply filter based on minimum keypoints"""
 	valid_xmls = []  # only filter valid xmls
 	seg_count = 0
 	output_data = []
@@ -194,7 +194,7 @@ def produce_img_dir(animal="dog"):
 
 def dominant_colour(a, is_not=None):
 	"""Given an (MxNx3) RGB array, returns the most dominant colour.
-    Allows for filter 'is_not', (X x 3) of rejected colours"""
+	Allows for filter 'is_not', (X x 3) of rejected colours"""
 	colors, count = np.unique(a.reshape(-1, a.shape[-1]), axis=0, return_counts=True)
 	include = [np.all([not np.array_equal(c, other) for other in is_not]) for c in colors]
 	colors, count = colors[include], count[include]
@@ -204,8 +204,8 @@ def dominant_colour(a, is_not=None):
 
 def produce_seg_dir(plot=False):
 	"""For each image file described in keypoints.json,
-    if there is only one dog in the image, extract segmentation as .npy binary file
-    and save to /segs/"""
+	if there is only one dog in the image, extract segmentation as .npy binary file
+	and save to /segs/"""
 
 	json_data = json.load(open(keypoints_loc))
 	progress = tqdm(total=len(json_data))
@@ -324,12 +324,12 @@ if __name__ == "__main__":
 	extract_keypoints(animal=animal, reject_multiple=True)
 	produce_img_dir(animal=animal)
 
-# extract_keypoints(plot = False)
-# produce_img_dir()
-# produce_seg_dir(plot = False)
-# add_has_seg()
-# produce_val()
-# copy_images_with_segs()
-# integrate_bboxs(r"E:\IIB Project Data\Training data sets\Dogs\Arena dataset\keypoints.json", r"E:\IIB Project Data\Training data sets\Dogs\Arena dataset\bboxs.json")
-# integrate_bboxs(r"E:\IIB Project Data\Training data sets\Dogs\animal-pose\keypoints.json", r"E:\IIB Project Data\Training data sets\Dogs\animal-pose\bboxs.json")
-# integrate_bboxs(r"E:\IIB Project Data\Training data sets\Dogs\youtube_clips_1\keypoints.json", r"E:\IIB Project Data\Training data sets\Dogs\youtube_clips_1\bboxs.json")
+	# extract_keypoints(plot = False)
+	# produce_img_dir()
+	# produce_seg_dir(plot = False)
+	# add_has_seg()
+	# produce_val()
+	# copy_images_with_segs()
+	# integrate_bboxs(r"E:\IIB Project Data\Training data sets\Dogs\Arena dataset\keypoints.json", r"E:\IIB Project Data\Training data sets\Dogs\Arena dataset\bboxs.json")
+	# integrate_bboxs(r"E:\IIB Project Data\Training data sets\Dogs\animal-pose\keypoints.json", r"E:\IIB Project Data\Training data sets\Dogs\animal-pose\bboxs.json")
+	# integrate_bboxs(r"E:\IIB Project Data\Training data sets\Dogs\youtube_clips_1\keypoints.json", r"E:\IIB Project Data\Training data sets\Dogs\youtube_clips_1\bboxs.json")
