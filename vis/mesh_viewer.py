@@ -1,6 +1,5 @@
 """Program to take a .ply file and show in matplotlib. Will add more mesh functionality with time"""
 
-src = "blank_mesh.ply"
 
 import plyfile
 from matplotlib import pyplot as plt
@@ -10,6 +9,7 @@ import os
 from vis.visualisations import MeshPlotter
 from data.data_loader import MeshData, C3DData, DataSources
 from vis.utils import save_animation
+src = "blank_mesh.ply"
 
 class BBox:
 	def __init__(self, x, y, z, pad = 0.0):

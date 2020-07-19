@@ -281,8 +281,6 @@ class IDResults:
 
 		efd = 10
 
-		#TODO add load functionality
-
 		forces, torques = self.solver.solve_forces(save=False, end_frames_disregarded=efd, report_equations=False)
 
 		self.forces = forces
@@ -298,8 +296,6 @@ class IDResults:
 		}
 
 		targ = 2 # left front knee
-
-
 
 		self.n_modes = 4
 

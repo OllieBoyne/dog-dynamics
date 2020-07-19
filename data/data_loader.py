@@ -22,7 +22,6 @@ from smal_fitter.smbld_model.smbld_mesh import SMBLDMesh
 path_join = os.path.join  # simplify function name
 
 
-
 class DataSources:
 	"""Gives the locations of sources for various forms of data within the project.
 
@@ -986,8 +985,8 @@ if __name__ == "__main__":
 		f = ForcePlateData(f"set_3\\{d}")
 		f.plot_pressure(title=d, n_frames=500)
 
-	# f = ForcePlateData(r"set_3\gus")
-	# f.plot_pressure(title="gus", n_frames = 500)
+# f = ForcePlateData(r"set_3\gus")
+# f.plot_pressure(title="gus", n_frames = 500)
 
-	# f = ForcePlateData(r"set_2\6kph run1")
-	# f.plot_pressure(title="set2-6r1", n_frames = 500)
+# f = ForcePlateData(r"set_2\6kph run1")
+# f.plot_pressure(title="set2-6r1", n_frames = 500)

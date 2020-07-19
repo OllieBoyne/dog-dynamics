@@ -1,3 +1,5 @@
+"""Various functionality for unit testing of Model presented in report, such as pure torque, static tests."""
+
 from dynamics.dynamics import *
 
 fig_dir = r"C:\Users\Ollie\Dropbox\Ollie\University\IIB\Project\Figures\inverse_dynamics\unit_tests"

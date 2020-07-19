@@ -1,4 +1,12 @@
-"""Quick test to see if there is any viability in a NN to detect footfalls"""
+"""Neural network trained at detecting footfalls given vertical paw positions over time.
+As discussed in report, this works but is likely overtrained on the input data, and would require a much larger
+data set to train effectively at scale.
+
+To use, import the FootfallDetector object, load the correct file, and run the process_clip method to identify
+the footfalls.
+
+For example, see run
+"""
 
 import torch
 import numpy as np
@@ -12,12 +20,10 @@ import os
 
 nn = torch.nn
 functional = nn.functional
-
 path_join = os.path.join
 
-save_loc = r"E:\IIB Project Data\produced data\ff trainer"
-
-sample_len = 200
+save_loc = r"E:\IIB Project Data\produced data\ff trainer"  # location to save trained network
+sample_len = 200  # number of data points to pass as input to network
 
 
 def sigmoid(s, k=1):
@@ -249,17 +255,8 @@ def load_data(kin_srcs, grf_srcs, mocap=True):
 			l = ((np.roll(dyn_data, -i, axis=0) > 0)[:, 0] * kin_data[:, 0]).sum()
 			test_fds.append(l)
 
-		# if s == 1:
-		#     plt.plot(test_fd_range,test_fds)
-		#     plt.show()
-
 		frame_delay = test_fd_range[np.argmin(test_fds)]
 		print(f"Selected Frame Delay: {frame_delay}")
-		#
-		# if s == 0:
-		#     plt.plot(kin_data[:, 0], "-o", ms=1)
-		#     plt.twinx().plot(np.roll(dyn_data[:, 0], -frame_delay) >0, color="orange")
-		#     plt.show()
 
 		for i in range(train_per_set):
 			p = np.random.choice([0, 1, 2, 3])  # random paw choice
@@ -305,7 +302,6 @@ def train(name="mocap"):
 	if name == "mocap":
 		kin_srcs = [r"set_2/3 kph run 4.c3d", r"set_2/6 kph run 1.c3d"]
 		grf_srcs = [r"set_2 -- 3kph run4", r"set_2 -- 6kph run1"]
-		# name, kin_src = "mocap", r"set_2/3 kph run 4.c3d" # Mocap
 
 		(train_in, train_gt), (val_in, val_gt) = load_data(kin_srcs=kin_srcs,
 														   grf_srcs=grf_srcs,
@@ -318,13 +314,13 @@ def train(name="mocap"):
 		(train_in, train_gt), (val_in, val_gt) = load_data(kin_srcs=kin_srcs, grf_srcs=grf_srcs,
 														   mocap=False)
 
+	# training hyper params
 	nit = 3000
 	gamma = 0.8
 	milestone = 200
 	save_every = 500
 
 	detector = FootfallDetector(train=True, name=name)
-	# optimiser = torch.optim.SGD(detector.parameters(), lr=0.1, momentum=0.9)
 
 	optimiser = torch.optim.Adam(detector.parameters(), lr=1e-2)
 	progress = tqdm(total=nit)
@@ -394,11 +390,9 @@ def run():
 	"""Run pretrained network on test set"""
 
 	freq = sample_len  # n frames
-	frame_delay = 16
 	clip_length = 10
 
 	kin_src = r"set_2/6 kph run 1.c3d"
-	# kin_src = r"set 2 3r4"
 	grf_src = r"set_2 -- 6kph run1"
 
 	kin_data = load_kin_data(kin_src, clip_length=clip_length, mocap=True, resample_freq=freq)
@@ -416,7 +410,6 @@ def run():
 	fig, ax = plt.subplots()
 	ax_input = ax.twinx()
 	ax_input.plot(paw_kin, label="input")
-	# ax.plot(np.roll(gt_tensor, -frame_delay), label="gt", color="green")
 	ax.plot(pred, label="predicted", color="red")
 	fig.legend()
 
@@ -425,4 +418,3 @@ def run():
 
 if __name__ == "__main__":
 	train(name="smal")
-# run()

@@ -1,9 +1,8 @@
 """Miscallaneous figures produced for project"""
 
-from my_work.annotated_joints_plotter import *
-from my_work.utils import *
+from dataset_production.mturk_processor import *
+from vis.utils import *
 import json
-from my_work.annotated_joints_plotter import *
 from scipy import ndimage
 from matplotlib import colors
 
@@ -271,7 +270,6 @@ def plot_single_dog(img_path = r"n02100236-German_short-haired_pointer/n02100236
 
 def plot_correlations():
     """Take the current correlations file for segmentations, and plot"""
-    from my_work.annotated_joints_plotter import dog_dataset
     src_dir = os.path.join(dog_dataset["images_dir"], "segments")
     plt.rc("text", usetex=True)
     dx = 0.0008
@@ -303,7 +301,9 @@ def plot_correlations():
 
     plt.tight_layout()
     plt.subplots_adjust(top=.98, right=.91, bottom=.15, left =.09)
-    plt.savefig(r"C:\Users\Ollie\Dropbox\Ollie\University\IIB\Project\Figures\image_processing\segmentations\correlations.png", dpi = 300)
+    plt.savefig(r"C:\Users\Ollie\Dropbox\Ollie\University\IIB\Project\Figures\image_processing\segmentations"
+                r"\correlations.png", dpi = 300)
 
-# plot_correlations()
-dataset_collage_plotter()
+if __name__ == "__main__":
+    # plot_correlations()
+    dataset_collage_plotter()

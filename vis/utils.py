@@ -1,5 +1,4 @@
-"""Misc functions, including:
-save animation"""
+"""Various utils for visualisation."""
 
 from matplotlib.animation import FuncAnimation, writers
 import matplotlib.pyplot as plt
@@ -103,8 +102,8 @@ def convert_1D_data_to_2D(x, y, z):
 
 class Timer:
 	"""Object that, once initialised, begins a timer. Every time 'lap' is called with a label,
-    records the time since previously lapped.
-    Printing this object gives all labels: time"""
+	records the time since previously lapped.
+	Printing this object gives all labels: time"""
 
 	def __init__(self):
 		self.last_lap = perf_counter()
@@ -143,7 +142,7 @@ from scipy.spatial.transform import Rotation
 
 class Cylinder:
 	"""Object that plots a 3D cylinder in space, with options for animating it.
-    Takes radius, and start and end Vector object coordinates of its centerline as defining inputs"""
+	Takes radius, and start and end Vector object coordinates of its centerline as defining inputs"""
 
 	def __init__(self, ax, radius, start: 'Vector', end: 'Vector', name=""):
 		self.n_sides = 10  # approximates a cylinder as a prismatic regular polygon of n-sides
@@ -195,7 +194,8 @@ class Cylinder:
 			c[0::2] = arr[:len(arr) // 2]
 			c[1::2] = arr[len(arr) // 2:]
 			return c
-			# = lambda arr: arr[0::2] + arr[1::2]
+
+		# = lambda arr: arr[0::2] + arr[1::2]
 
 		n_tris = self.n_sides * 2
 		X, Y, Z = [i(v) for v in [x, y, z]]
@@ -330,10 +330,10 @@ class VectorSet(list):
 
 def batch_rodrigues(thetas):
 	"""
-    Takes theta, an (Nx3) numpy array dictating N rotations, described separately about X, Y, Z.
+	Takes theta, an (Nx3) numpy array dictating N rotations, described separately about X, Y, Z.
 
-    Returns R, an (N x 3 x 3) array of rotation matrices.
-    """
+	Returns R, an (N x 3 x 3) array of rotation matrices.
+	"""
 
 	N = len(thetas)
 	out = np.zeros((N, 3, 3))
@@ -347,8 +347,8 @@ def batch_rodrigues(thetas):
 
 def list_all_files(folder, title="image_url"):
 	"""Given a folder, lists all files in the folder and all its subfolders, as their relative paths,
-    and outputs these as folder/file_list.csv.
-    Optional parameter for a title for the csv, that is present as the first row (for use for MTurk)"""
+	and outputs these as folder/file_list.csv.
+	Optional parameter for a title for the csv, that is present as the first row (for use for MTurk)"""
 
 	rows = []
 	if title is not None: rows += [title]
@@ -396,9 +396,9 @@ def fill_segment(data):
 
 def image_to_polygon(image):
 	"""Given a binary image as a numpy array:
-    - converts to grayscale
-    - identifies polygons
-    - returns properties"""
+	- converts to grayscale
+	- identifies polygons
+	- returns properties"""
 
 	H, W = image.shape
 

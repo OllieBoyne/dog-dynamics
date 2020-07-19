@@ -243,6 +243,6 @@ def plot_keypoint_distributions():
 
 if __name__ == "__main__":
 	produce_normalised_skeleton(origin_joint="Left front leg: top", target_joint="Left front leg: middle joint")
-# plot_keypoint_distributions()
-# plot_all_joint_rom()
-# plt.show()
+	# plot_keypoint_distributions()
+	# plot_all_joint_rom()
+	# plt.show()
